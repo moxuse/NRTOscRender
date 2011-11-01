@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title></title>
+<meta name="Generator" content="Cocoa HTML Writer">
+<meta name="CocoaVersion" content="1138.23">
+<style type="text/css">
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #000000}
+p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Monaco; color: #000000; min-height: 17.0px}
+p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #000000; min-height: 17.0px}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #000000}
+p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #000000; min-height: 14.0px}
+p.p6 {margin: 0.0px 0.0px 0.0px 56.0px; text-indent: -56.0px; font: 12.0px Helvetica; color: #000000}
+p.p7 {margin: 0.0px 0.0px 0.0px 56.0px; text-indent: -56.0px; font: 12.0px Helvetica; color: #000000; min-height: 14.0px}
+p.p8 {margin: 0.0px 0.0px 0.0px 28.0px; text-indent: -28.0px; font: 12.0px Helvetica; color: #000000}
+p.p9 {margin: 0.0px 0.0px 0.0px 28.0px; text-indent: -28.0px; font: 12.0px Helvetica; color: #000000; min-height: 14.0px}
+p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Helvetica; color: #000000}
+p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #000000}
+p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #000000; min-height: 14.0px}
+span.s1 {font: 18.0px Helvetica}
+span.Apple-tab-span {white-space:pre}
+</style>
+</head>
+<body>
+<p class="p1"><span class="s1"><b>NRTOscRender<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></b></span><b>Nonrealtime Sound File Render</b></p>
+<p class="p2"><br></p>
+<p class="p1">ThisClass responces optional OSC Message and renders sound file to a directory.</p>
+<p class="p2"><br></p>
+<p class="p3"><br></p>
+<p class="p4"><b>Class Methods</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b>*new(cmdName, funcMane, addr)</b></p>
+<p class="p5"><br></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Create a NRTOscRender instance.</p>
+<p class="p5"><br></p>
+<p class="p6"><span class="Apple-tab-span">	</span><b>cmdName </b>- A <a href="../../../Applications/SuperCollider/Help/Collections/String.html">String</a> or <a href="../../../Applications/SuperCollider/Help/Core/Symbol.html">Symbol</a> to recive messages. This as addres of OSC message.</p>
+<p class="p7"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></p>
+<p class="p6"><span class="Apple-tab-span">	</span><b>funcName</b> - A <a href="../../../Applications/SuperCollider/Help/Collections/String.html">String</a> to head of messages.</p>
+<p class="p7"><span class="Apple-tab-span">	</span></p>
+<p class="p6"><span class="Apple-tab-span">	</span><b>addr</b> - An instance of NetAddr to recive messages.</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p4"><b>Instance Methods</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b>size</b><span class="Apple-converted-space"> </span></p>
+<p class="p5"><br></p>
+<p class="p8"><span class="Apple-tab-span">	</span>length of Sound File. Unit is Second. default is 10.0 seconds.</p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></p>
+<p class="p1"><b>start</b><span class="Apple-converted-space"> </span></p>
+<p class="p5"><br></p>
+<p class="p8"><span class="Apple-tab-span">	</span>start listeninng.</p>
+<p class="p5"><b><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></b></p>
+<p class="p8"><b>stop</b></p>
+<p class="p9"><b><span class="Apple-tab-span">	</span></b></p>
+<p class="p8"><b><span class="Apple-tab-span">	</span></b>stop<span class="Apple-converted-space">  </span>listenning.</p>
+<p class="p9"><br></p>
+<p class="p8"><b>exist</b></p>
+<p class="p9"><b><span class="Apple-tab-span">	</span></b></p>
+<p class="p8"><b><span class="Apple-tab-span">	</span></b>Check sound file's existance.</p>
+<p class="p9"><br></p>
+<p class="p9"><br></p>
+<p class="p9"><br></p>
+<p class="p10"><b>Examples</b></p>
+<p class="p2"><br></p>
+<p class="p11">r = NRTOscRender("/writeFile","w",NetAddr("127.0.0.1",57120));</p>
+<p class="p12"><br></p>
+<p class="p11">//If you wants to set name of files. You set name with setter. default name is current date and time.</p>
+<p class="p12"><br></p>
+<p class="p11">r.name_("test_sound");</p>
+<p class="p12"><br></p>
+<p class="p11">//Also you can set directroy where to write files. Reciver generates three files, SynthDef File, Score File and SoundFile.</p>
+<p class="p11">//Please attention to write directory with last slash('/') whitch means directory</p>
+<p class="p12"><br></p>
+<p class="p11">r.synthDefsFilePath_("/Applications/SuperCollider/");</p>
+<p class="p11">r.soundFilePath_("/Applications/SuperCollider/");</p>
+<p class="p11">r.scoreFilePath_("/Applications/SuperCollider/");</p>
+<p class="p12"><br></p>
+<p class="p11">//Start listen.</p>
+<p class="p12"><br></p>
+<p class="p11">r.start;</p>
+<p class="p12"><br></p>
+<p class="p11">//Send OSC Message with cmdName, funcName and Strings of code that will be compiled as grafFunction of SynthDef.</p>
+<p class="p12"><br></p>
+<p class="p11">NetAddr("127.0.0.1",57120).sendMsg("/writeFile","w", "SinOsc.ar(440,0,0.3).dup" );</p>
+<p class="p12"><br></p>
+<p class="p11">//stop listen.</p>
+<p class="p11">r.stop;</p>
+<p class="p12"><br></p>
+<p class="p11">r.exist;</p>
+<p class="p12"><br></p>
+<p class="p12"><br></p>
+<p class="p12"><br></p>
+</body>
+</html>
