@@ -1,21 +1,19 @@
 NRTOscRender {
-	var <reciver,<reciverfunc;
-	var <cmdName, <addr, <func, <>name,<funcName, <>size;
+	var <reciver;
+	var <cmdName, <addr, <func, <>name, <>size;
 	var <time,<>second,<>synthDefsFilePath,<>scoreFilePath,<>soundFilePath,>exist;
 
-	*new{|cmdN, funcN, add|
+	*new{ |cmdN, funcN, add|
 		^super.new.init(cmdN, funcN, add);
 	}
 
-	init {|argcmdName, argfuncName, argaddr|
+	init { |argcmdName, argaddr|
 		cmdName = argcmdName;
-		funcName = argfuncName;
 		addr = argaddr;
 		size = 10.0;
-		reciver = OSCReceiver(cmdName,addr);
-		synthDefsFilePath = Platform.resourceDir;
-		soundFilePath = Platform.resourceDir;
-		scoreFilePath = Platform.resourceDir;
+		synthDefsFilePath = SynthDef.synthDefDir;
+		soundFilePath = thisProcess.platform.recordingsDir ++ "/";
+		scoreFilePath = File.getcwd;
 
 		//change synthDefsFilePath
 		"SC_SYNTHDEF_PATH".setenv(synthDefsFilePath);
@@ -23,53 +21,53 @@ NRTOscRender {
 		time = Date.getDate.format("%Y%m%d%H%M%S");
 		second = Date.getDate.format("%M%S")++(10.rand).asString;
 		name = time;
-		func = {	|msg|
-				var graphFunc;
-				var skip = false;
-				var source,scoreFile,file,command;
-				source = "{Out.ar(0," + msg +")}";
-						msg.postln;
+		func = { |msg|
+			var graphFunc;
+			var skip = false;
+			var source,scoreFile,file,command;
+			source = "{Out.ar(0," + msg[1] +")}";
+			msg[1].postln;
 
-				try{
-						graphFunc = source.compile.value;
-						SynthDef(name:time,ugenGraphFunc:graphFunc).writeDefFile(synthDefsFilePath);
-					}{|error|
-						"fale to compilse source :".postln;
-						source.postln;
-						skip = true;
-					 };
+			try{
+				graphFunc = source.compile.value;
+				SynthDef(name:name,ugenGraphFunc:graphFunc).writeDefFile(synthDefsFilePath);
+				("write def file ... :" + name ).postln;
+			} { |error|
+				error.postln;
+				"fale to compilse source :".postln;
+				source.postln;
+				skip = true;
+			};
 
-				if(skip!=true,{
+			if ( skip != true, {
 				scoreFile = scoreFilePath ++ time ++".osc";
 				file = File( scoreFile ,"w");
 
-					command = [ 0.2, [9, time, second.asInteger, 0, 0]].asRawOSC;
-					file.write(command.size);
-					file.write(command);
+				command = [ 0.2, [9, time, second.asInteger, 0, 0]].asRawOSC;
+				file.write(command.size);
+				file.write(command);
 
-					command = [ size, [11, second.asInteger]].asRawOSC;
-					file.write(command.size);
-					file.write(command);
+				command = [ size, [11, second.asInteger]].asRawOSC;
+				file.write(command.size);
+				file.write(command);
 
-					command = [ 10.2, [0]].asRawOSC;
-					file.write(command.size);
-					file.write(command);
+				command = [ 10.2, [0]].asRawOSC;
+				file.write(command.size);
+				file.write(command);
 
 				file.close;
 
 				try{
-					("./scsynth -N "++ scoreFile ++ " _ " ++ soundFilePath ++ time ++ ".wav 44100 WAVE int24 -o 2").unixCmd;
+					("SuperCollider.app/Contents/Resources/scsynth -N '"++ scoreFile ++ "' _ '" ++ soundFilePath ++ "/" ++ name ++ ".wav' 44100 WAVE int24 -o 2").unixCmd;
+					("write sound file ... " ++ soundFilePath ++ name ++ ".wav" ).postln;
+				}{|error|
+					"fale to save sound file".postln;
+					error.postln;
+				}
+			};);
 
-					}{|error|
-						"fale to save soundFile".postln;
-						error.postln;
-					 };
-
-				});
-
-			};
-		reciverfunc  = OSCReceiverFunction(cmdName,funcName,func);
-		reciver.start;
+		};
+		reciver  = OSCFunc(func,cmdName,addr);
 	}
 
 	synthDefsPath_{arg path;
@@ -77,12 +75,16 @@ NRTOscRender {
 		synthDefsFilePath = path;
 	}
 
-	start {
-		reciver.start;
+	enable {
+		reciver.enable;
 	}
 
-	stop {
-		reciver.stop;
+	disable {
+		reciver.disable;
+	}
+
+	free {
+		reciver.free;
 	}
 
 	//clear { reciverfunc.all = IdentityDictionary.new }
