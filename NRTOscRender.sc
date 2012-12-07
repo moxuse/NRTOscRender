@@ -13,9 +13,9 @@ NRTOscRender {
 		addr = argaddr;
 		size = 10.0;
 		reciver = OSCReceiver(cmdName,addr);
-		synthDefsFilePath = File.getcwd;
-		soundFilePath = File.getcwd;
-		scoreFilePath = File.getcwd;
+		synthDefsFilePath = Platform.resourceDir;
+		soundFilePath = Platform.resourceDir;
+		scoreFilePath = Platform.resourceDir;
 
 		//change synthDefsFilePath
 		"SC_SYNTHDEF_PATH".setenv(synthDefsFilePath);
